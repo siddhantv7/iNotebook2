@@ -1,0 +1,5 @@
+/* override bootstrap navbar colors */
+.navbar,
+.navbar-default {
+    background-image: linear-gradient(to bottom,#e1f0f5 0,#e1f0f5 100%) !important; /* override background image gradient w/ flat color */
+}

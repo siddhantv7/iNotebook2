@@ -1,9 +1,26 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar.js";
+import About from "./components/About.js";
+import Home from "./components/Home.js";
+import NoteState from './context/notes/noteState.js';
 
 function App() {
   return (
-    <h1>This is my app</h1>
+    <>
+      <NoteState>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container">
+            <Routes>
+              <Route exact path="/" element={<Home />}></Route>
+              <Route exact path="/home" element={<Home />} />
+              <Route exact path="/about" element={<About />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </NoteState>
+    </>
   );
 }
-
 export default App;
