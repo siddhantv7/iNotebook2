@@ -2,14 +2,14 @@
 import { Link, useLocation } from "react-router-dom";
 import Logo from '../logo2.jpg';
 import './Navbar.css';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 const Navbar = () => {
     let location = useLocation();
-    useEffect(() => {
-        // Google Analytics
-        console.log(location.pathname);
-    }, [location]);
+    // useEffect(() => {
+    //     // Google Analytics
+    //     console.log(location.pathname);
+    // }, [location]);
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary py-0 custom-navbar" >

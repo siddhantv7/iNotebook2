@@ -69,7 +69,7 @@ router.post('/updatenote/:id', fetchuser, async (req, res) => {
     }
 })
 // ROUTE4: Deleting the existing Note using : POST "/api/notes/getuser". login required
-router.post('/deletenote/:id', fetchuser, async (req, res) => {
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
     try {
         let note = await Notes.findById(req.params.id);
         if(!note){return res.status(404).send("Not Found!")}
@@ -79,7 +79,8 @@ router.post('/deletenote/:id', fetchuser, async (req, res) => {
         }
         note = await Notes.findByIdAndDelete(req.params.id);
 
-        res.json({"success": "Note deleted successfully", note: note});
+        // res.json({"success": "Note deleted successfully", note: note});
+        res.json({"success": "Note deleted successfully"});
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
