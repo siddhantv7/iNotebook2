@@ -8,13 +8,12 @@ const fetchuser = require('../middleware/fetchuser')
 
 const JWT_SECRET = "helllowallahumai"
 // ROUTE1: User registration
-
-
 router.post('/createUser', [
     body("username", "Enter a valid username").isLength({ min: 4 }),
     body("password", "Password must be atleast 5 characters").isLength({ min: 5 }),
     body("email", "Enter a valid email").isEmail(),
 ], async (req, res) => {
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -48,7 +47,8 @@ router.post('/createUser', [
 
 
         // res.json({Status: user})      // Give user input object
-        res.json({ Status: "User added" })
+        success = true;
+        res.json({success, Status: "User added" })
     } catch (error) {
         res.status(500).send("Some error occured.")
     }
@@ -83,6 +83,7 @@ router.post('/login', [
     body("password", "Password can not be blank")
 
 ], async (req, res) => {
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -92,10 +93,12 @@ router.post('/login', [
         let user = await User.findOne({email});
         if (!user) {
             return res.status(400).json({ error: "Please try to login with correct credentials." })
+            success = false;
         }
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
             return res.status(400).json({ error: "Please try to login with correct credentials" });
+            success = false;
         }
         const data = {
             user: {
@@ -103,8 +106,9 @@ router.post('/login', [
             }
         }
         const authtoken = jwt.sign(data, JWT_SECRET);
-        res.json({authtoken})
-
+        success = true;
+        res.json({success, authtoken})
+        
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

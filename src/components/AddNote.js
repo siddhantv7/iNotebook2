@@ -20,25 +20,30 @@ const AddNote = (props) => {
             setNote({ title: "", description: "", tag: "" });
         }
     }, [edit]);
+    // console.log(edit.change);
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (edit.change === "True") {
-            handleEdit();
-        } else {
-            handleClick();
-        }
-    };
+    //     if (edit.change === "True") {
+    //         handleEdit();
+    //     } else {
+    //         handleClick();
+    //     }
+    // };
     const handleClick = (e) => {
         e.preventDefault();
+        console.log("addNote")
         addNote({
             title: note.title,
             description: note.description,
             tag: note.tag
         });
+        setNote({ title: "", description: "", tag: "" });
     };
 
-    const handleEdit = () => {
+    const handleEdit = (e) => {
+        console.log("editNote")
+        e.preventDefault();
         editNote({
             id: edit.id,
             title: note.title,
@@ -54,25 +59,25 @@ const AddNote = (props) => {
 
     return (
         <div>
-            <div className="container">
+
             <h4>{edit.change === "True" ? 'Edit Note' : 'Add a Note'}</h4>
-                <form className='mx-3' onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="title" className="form-label">Title</label>
-                        <input type="text" className="form-control" id="title" name="title" value={note.title} onChange={onChange} />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="description" className="form-label">Description</label>
-                        <input type="text" className="form-control" id="description" name="description" value={note.description} onChange={onChange} />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="tag" className="form-label">Tag</label>
-                        <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={onChange} />
-                    </div>
-                    <button type="submit" className="btn btn-primary" onClick={handleClick}>{edit.change === "True" ? 'Update' : 'Submit'}</button>
-                </form>
-                <h4>Your Notes</h4>
-            </div>
+            <form className='mx-0' >
+                <div className="mb-3">
+                    <label htmlFor="title" className="form-label">Title</label>
+                    <input type="text" className="form-control" id="title" name="title" value={note.title} onChange={onChange} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="description" className="form-label">Description</label>
+                    <input type="text" className="form-control" id="description" name="description" value={note.description} onChange={onChange} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="tag" className="form-label">Tag</label>
+                    <input type="text" className="form-control" id="tag" name="tag" value={note.tag} onChange={onChange} />
+                </div>
+                <button type="submit" className="btn btn-primary" onClick={edit.change === "True" ? handleEdit : handleClick}>{edit.change === "True" ? 'Update Note' : 'Add Note'}</button>
+            </form>
+            <h4>Your Notes</h4>
+
         </div>
     )
 }
