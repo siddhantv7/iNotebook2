@@ -9,6 +9,8 @@ const NoteState = (props) => {
 
     const [notes, setNotes] = useState()
     //Get ALl Notes
+    console.log("type: ");
+    console.log(typeof(notes))
     const getNote = async () => {
 
         const response = await fetch(`${host}/api/notes/fetchallnotes`, {
